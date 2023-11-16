@@ -1,12 +1,12 @@
 import { _decorator, Camera, Canvas, Component, director, RenderTexture, Sprite, SpriteFrame, UITransform } from 'cc';
 const { ccclass, property } = _decorator;
 
-@ccclass('Ground')
-export class Ground extends Component {
+@ccclass('Map')
+export class Map extends Component {
 
     @property({
         type: Camera
-    }) groundCamera: Camera;
+    }) mapCamera: Camera;
     @property({
         type: Sprite
     }) debugSprite: Sprite | null;
@@ -22,8 +22,8 @@ export class Ground extends Component {
             width: mainCanvasUITransform.width,
             height: mainCanvasUITransform.height,
         });
-        this.groundCamera.targetTexture = this.groundTexture;
-        this.groundCamera.orthoHeight = mainCanvas.cameraComponent.orthoHeight;
+        this.mapCamera.targetTexture = this.groundTexture;
+        this.mapCamera.orthoHeight = mainCanvas.cameraComponent.orthoHeight;
         if (this.debugSprite?.node?.active) {
             const spriteFrame = new SpriteFrame();
             spriteFrame.texture = this.groundTexture;
@@ -32,8 +32,8 @@ export class Ground extends Component {
     }
 
     canWalk(x: number, y: number): boolean {
+        this.colorArr.fill(0);
         this.groundTexture.readPixels(Math.round(x + 640), Math.round(y + 360), 1, 1, this.colorArr);
-        console.log(this.colorArr);
         return this.colorArr[3] > 0;
     }
 }

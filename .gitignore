@@ -8,6 +8,7 @@ local/
 build/
 profiles/
 native
+.creator/asset-template/typescript/Custom\ Script\ Template\ Help\ Documentation.url
 #//////////////////////////
 # NPM
 #//////////////////////////
