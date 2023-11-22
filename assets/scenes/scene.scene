@@ -653,7 +653,7 @@
   {
     "__type__": "cc.Node",
     "_name": "Sprite",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 14
@@ -852,7 +852,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "_parent": {
       "__id__": 14
     },
@@ -964,7 +964,7 @@
   {
     "__type__": "cc.Node",
     "_name": "WayMark-001",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 14
@@ -1227,7 +1227,7 @@
   {
     "__type__": "cc.Node",
     "_name": "WayMark-002",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 14
@@ -1364,7 +1364,7 @@
   {
     "__type__": "cc.Node",
     "_name": "WayMark-003",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 14
@@ -1501,7 +1501,7 @@
   {
     "__type__": "cc.Node",
     "_name": "WayMark-013",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 14
@@ -1638,7 +1638,7 @@
   {
     "__type__": "cc.Node",
     "_name": "WayMark-004",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 14
@@ -1775,7 +1775,7 @@
   {
     "__type__": "cc.Node",
     "_name": "WayMark-015",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 14
@@ -1909,7 +1909,7 @@
   {
     "__type__": "cc.Node",
     "_name": "WayMark-005",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 14
@@ -2043,7 +2043,7 @@
   {
     "__type__": "cc.Node",
     "_name": "WayMark-006",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 14
@@ -2177,7 +2177,7 @@
   {
     "__type__": "cc.Node",
     "_name": "WayMark-007",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 14
@@ -2311,7 +2311,7 @@
   {
     "__type__": "cc.Node",
     "_name": "WayMark-008",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 14
@@ -2451,7 +2451,7 @@
   {
     "__type__": "cc.Node",
     "_name": "WayMark-009",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 14
@@ -2591,7 +2591,7 @@
   {
     "__type__": "cc.Node",
     "_name": "WayMark-011",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 14
@@ -2725,7 +2725,7 @@
   {
     "__type__": "cc.Node",
     "_name": "WayMark-010",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 14
@@ -2862,7 +2862,7 @@
   {
     "__type__": "cc.Node",
     "_name": "WayMark-012",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 14
@@ -2996,7 +2996,7 @@
   {
     "__type__": "cc.Node",
     "_name": "WayMark-014",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 14
@@ -3150,6 +3150,7 @@
     "__type__": "5dc060AOZNAqJFJ+TcgRB2N",
     "_name": "",
     "_objFlags": 0,
+    "__editorExtras__": {},
     "node": {
       "__id__": 14
     },
@@ -3427,6 +3428,7 @@
     "__type__": "743d521mkVJvodHJ2zxXHIU",
     "_name": "",
     "_objFlags": 0,
+    "__editorExtras__": {},
     "node": {
       "__id__": 94
     },

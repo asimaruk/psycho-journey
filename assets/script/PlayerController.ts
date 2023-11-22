@@ -2,7 +2,6 @@ import {
     _decorator,
     Animation,
     Component,
-    EPSILON,
     EventKeyboard,
     EventMouse,
     Input,
@@ -37,6 +36,7 @@ export class PlayerController extends Component {
     private inParentLocationV3 = v3();
     private path: Array<number> = [];
     private nextPathPointV3: Vec3 = v3();
+    private vec3a = v3();
 
     protected onLoad() {
         input.on(Input.EventType.KEY_DOWN, this.onKeyDown, this);
@@ -80,8 +80,14 @@ export class PlayerController extends Component {
             if (!walkState.isPlaying || walkState.isPaused) {
                 walkState.play();
             }
-            this.node.setPosition(this.node.position.lerp(this.nextPathPointV3, deltaTime));
-            if (this.node.position.equals(this.nextPathPointV3, EPSILON)) {
+            this.vec3a
+                .set(this.nextPathPointV3)
+                .subtract(this.node.position)
+                .normalize()
+                .multiplyScalar(this.speed * deltaTime)
+                .add(this.node.position);
+            this.node.setPosition(this.vec3a);
+            if (this.node.position.equals(this.nextPathPointV3, 1)) {
                 this.path = this.path.slice(2);
                 if (this.path.length >= 2) {
                     this.nextPathPointV3.set(this.path[0], this.path[1]);
@@ -155,8 +161,9 @@ export class PlayerController extends Component {
             this.inParentLocationV3.y,
         );
         console.log(`Path evaluating took ${Date.now() - now}ms`);
-        console.log(this.path);
-        this.nextPathPointV3.set(this.path[0], this.path[1]);
+        if (this.path.length > 0) {
+            this.nextPathPointV3.set(this.path[0], this.path[1]);
+        }
     }
 }
 
