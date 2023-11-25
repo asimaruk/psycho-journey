@@ -30,8 +30,8 @@ export class Map extends Component {
     }) g: Graphics | null;
 
     private groundTexture: RenderTexture;
-    private colorArr: Uint8Array;
-    private wholeMap: Uint8Array;
+    private mapColorSingle: Uint8Array;
+    private mapColors: Uint8Array;
     private wayMarks: Array<WayMark> = [];
     private graph: PathGraph;
     private vec3a = v3();
@@ -43,8 +43,8 @@ export class Map extends Component {
         const mainCanvasUITransform = mainCanvas.getComponent(UITransform);
         const canvasWidth = Math.round(mainCanvasUITransform.width);
         const canvasHeight = Math.round(mainCanvasUITransform.height);
-        this.colorArr = new Uint8Array(canvasWidth * canvasHeight * 4);
-        this.wholeMap = new Uint8Array(canvasWidth * canvasHeight);
+        this.mapColorSingle = new Uint8Array(4);
+        this.mapColors = new Uint8Array(canvasWidth * canvasHeight * 4);
         this.groundTexture = new RenderTexture();
         this.groundTexture.reset({
             width: canvasWidth,
@@ -75,36 +75,36 @@ export class Map extends Component {
     }
 
     canWalk(x: number, y: number): boolean {
-        this.colorArr.fill(0);
-        this.groundTexture.readPixels(Math.round(x + 640), Math.round(y + 360), 1, 1, this.colorArr);
-        return this.colorArr[3] == 255;
+        this.groundTexture.readPixels(Math.round(x + 640), Math.round(y + 360), 1, 1, this.mapColorSingle);
+        return this.mapColorSingle[3] == 255;
+    }
+
+    private isWalkable(x: number, y: number): boolean {
+        const pointAlphaIndex = (Math.round(x + 640) + 1280 * (Math.round(y + 360))) * 4 + 3;
+        return this.mapColors[pointAlphaIndex] == 255;
     }
 
     findPath(fromX: number, fromY: number, toX: number, toY: number): number[] {
         const now = Date.now();
-        this.groundTexture.readPixels(0, 0, this.groundTexture.width, this.groundTexture.height, this.colorArr);
-        console.log(`Ground texture reading took ${Date.now() - now}`);
-        const now_1 = Date.now();
-        this.wholeMap.forEach((v, i) => {
-            this.wholeMap[i] = this.colorArr[i * 4 + 3];
-        });
-        console.log(`Converting to map took ${Date.now() - now_1}`);
+        this.groundTexture.readPixels(0, 0, this.groundTexture.width, this.groundTexture.height, this.mapColors);
+        console.log(`Ground texture reading took ${Date.now() - now}ms`);
 
         if (this.g && this.g.enabledInHierarchy) {
             this.g.clear();
-            this.wholeMap.forEach((v, i) => {
-                if (v == 255) {
-                    this.g.circle(i % 1280 - 640, Math.ceil(i / 1280) - 360, 1);
+            for (let i = 3; i < this.mapColors.length; i += 4) {
+                if (this.mapColors[i] == 255) {
+                    const n = Math.floor(i / 4);
+                    this.g.circle(n % 1280 - 640, Math.ceil(n / 1280) - 360, 1);
                     this.g.fill();
                 }
-            });
+            }
         }
 
-        if (this.wholeMap[Math.round(toX) + 640 + 1280 * (Math.round(toY) + 360)] != 255) {
+        if (!this.isWalkable(toX, toY)) {
             return [];
         }
 
-        const now_2 = Date.now();
+        const now_1 = Date.now();
         this.graph.reset(fromX, fromY, toX, toY, (x0, y0, x1, y1) => {
             this.vec3a.set(x0, y0);
             this.vec3b.set(x1, y1);
@@ -114,13 +114,13 @@ export class Map extends Component {
             for (let i = 1; i < dist; i++) {
                 const ratio = i / dist;
                 this.vec3c.set(x0 + xDist * ratio, y0 + yDist * ratio);
-                if (this.wholeMap[Math.round(this.vec3c.x) + 640 + 1280 * (Math.round(this.vec3c.y) + 360)] != 255) {
+                if (!this.isWalkable(this.vec3c.x, this.vec3c.y)) {
                     return Infinity;
                 }
             }
             return dist;
         });
-        console.log(`Graph reseting took ${Date.now() - now_2}`);
+        console.log(`Graph reseting took ${Date.now() - now_1}ms`);
         const path = this.graph.search();
         return path.reduce<Array<number>>((acc, v) => {
             acc.push(v.x);

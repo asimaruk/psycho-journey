@@ -148,7 +148,7 @@ export class PlayerController extends Component {
     }
 
     private onMouseUp(event: EventMouse) {
-        event.getLocation(this.mouseEventLocationV2);
+        event.getUILocation(this.mouseEventLocationV2);
         console.log(`Mouse coordinates: ${this.mouseEventLocationV2}`);
         this.mouseEventLocationV3.set(this.mouseEventLocationV2.x, this.mouseEventLocationV2.y, 0);
         this.node.parent.getComponent(UITransform).convertToNodeSpaceAR(this.mouseEventLocationV3, this.inParentLocationV3);

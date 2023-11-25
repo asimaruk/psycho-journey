@@ -331,7 +331,7 @@
   {
     "__type__": "cc.Node",
     "_name": "GroundDebugSprite",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 2
@@ -440,7 +440,7 @@
   {
     "__type__": "cc.Node",
     "_name": "DebugGraphics",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 2
