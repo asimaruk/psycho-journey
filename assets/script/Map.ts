@@ -75,12 +75,19 @@ export class Map extends Component {
     }
 
     canWalk(x: number, y: number): boolean {
-        this.groundTexture.readPixels(Math.round(x + 640), Math.round(y + 360), 1, 1, this.mapColorSingle);
+        const cameraRelatedX = Math.round(x - this.mapCamera.node.position.x + 640);
+        const cameraRelatedY = Math.round(y - this.mapCamera.node.position.y + 360);
+        this.groundTexture.readPixels(cameraRelatedX, cameraRelatedY, 1, 1, this.mapColorSingle);
         return this.mapColorSingle[3] == 255;
     }
 
     private isWalkable(x: number, y: number): boolean {
-        const pointAlphaIndex = (Math.round(x + 640) + 1280 * (Math.round(y + 360))) * 4 + 3;
+        if (Math.abs(this.mapCamera.node.position.x - x) > 640 || Math.abs(this.mapCamera.node.position.y - y) > 360) {
+            return false;
+        }
+        const cameraRelatedX = Math.round(x - this.mapCamera.node.position.x + 640);
+        const cameraRelatedY = Math.round(y - this.mapCamera.node.position.y + 360);
+        const pointAlphaIndex = (cameraRelatedX + 1280 * cameraRelatedY) * 4 + 3;
         return this.mapColors[pointAlphaIndex] == 255;
     }
 
@@ -91,6 +98,7 @@ export class Map extends Component {
 
         if (this.g && this.g.enabledInHierarchy) {
             this.g.clear();
+            this.g.node.setPosition(this.mapCamera.node.position);
             for (let i = 3; i < this.mapColors.length; i += 4) {
                 if (this.mapColors[i] == 255) {
                     const n = Math.floor(i / 4);
@@ -106,6 +114,9 @@ export class Map extends Component {
 
         const now_1 = Date.now();
         this.graph.reset(fromX, fromY, toX, toY, (x0, y0, x1, y1) => {
+            if (!this.isWalkable(x0, y0) || !this.isWalkable(x1, y1)) {
+                return Infinity;
+            }
             this.vec3a.set(x0, y0);
             this.vec3b.set(x1, y1);
             const dist = getDistance(this.vec3a, this.vec3b);
