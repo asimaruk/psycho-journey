@@ -1,4 +1,4 @@
-import { EventTarget } from 'cc';
+import { EventTarget, Rect } from 'cc';
 
 export type PlayerMoveEvent = {
     kind: 'player_moved',
@@ -7,15 +7,16 @@ export type PlayerMoveEvent = {
     x2: number,
     y2: number,
 };
-export type AnyEvent = {
-    kind: 'any'
+export type BackgroundBoxChanged = {
+    kind: 'background_box_changed',
+    box: Rect,
 };
 type Config<Events extends { kind: string }> = {
     [E in Events as E['kind']]: E;
 };
 type Kinds<Events extends { kind: string }> = Events['kind'];
-type EventKind = Kinds<PlayerMoveEvent | AnyEvent>;
-type EventConfig = Config<PlayerMoveEvent | AnyEvent>;
+type EventKind = Kinds<PlayerMoveEvent | BackgroundBoxChanged>;
+type EventConfig = Config<PlayerMoveEvent | BackgroundBoxChanged>;
 
 export class EventManager extends EventTarget {
 
